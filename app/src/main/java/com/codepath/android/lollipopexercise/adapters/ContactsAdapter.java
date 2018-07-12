@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -112,7 +113,12 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                         // Fire an intent when a contact is selected
                         Intent intent = new Intent(context, DetailsActivity.class);
                         intent.putExtra(EXTRA_CONTACT, contact);
-                        context.startActivity(intent);
+                        ActivityOptionsCompat options = ActivityOptionsCompat.
+                                makeSceneTransitionAnimation(mContext, (View)ivProfile, "profile")
+                                .makeSceneTransitionAnimation(mContext, tvName, "name")
+                                .makeSceneTransitionAnimation(mContext, vPalette, "palette");
+
+                        context.startActivity(intent, options.toBundle());
                         // Pass contact object in the bundle and populate details activity.
                     }
                 }
